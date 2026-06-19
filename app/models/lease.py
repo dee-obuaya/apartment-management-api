@@ -55,3 +55,5 @@ class Lease(Base):
     tenant = relationship('Tenant', back_populates='leases')
     apartment = relationship('Apartment', back_populates='leases')
     payments = relationship('Payment', back_populates='lease')
+    maintenance_requests = relationship('MaintenanceRequest', back_populates='lease')
+    documents = relationship('Document', back_populates='lease')
