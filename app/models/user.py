@@ -41,3 +41,4 @@ class User(Base):
 
     tenant_profile = relationship('Tenant', back_populates='user', uselist=False)
     owner_profile = relationship('Owner', back_populates='user', uselist=False)
+    uploaded_documents = relationship('Document', back_populates='uploaded_by')

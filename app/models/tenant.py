@@ -31,3 +31,4 @@ class Tenant(Base):
     user = relationship('User', back_populates='tenant_profile')
     leases = relationship('Lease', back_populates='tenant')
     maintenance_requests = relationship('MaintenanceRequest', back_populates='tenant')
+    documents = relationship('Document', back_populates='tenant')

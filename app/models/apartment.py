@@ -56,3 +56,4 @@ class ApartmentAmenity(Base):
     amenity_name = Column(String(100), nullable=False)
 
     apartment = relationship('Apartment', back_populates='amenities')
+    documents = relationship('Document', back_populates='apartment')
