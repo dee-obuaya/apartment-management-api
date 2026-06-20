@@ -3,7 +3,7 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, model_validator
 
-from app.models.document import DocumentType
+from app.models.document import DocumentType, DocumentStatus
 
 
 class DocumentCreate(BaseModel):
@@ -37,6 +37,7 @@ class DocumentCreate(BaseModel):
 
 class DocumentUpdate(BaseModel):
     document_type: DocumentType | None = None
+    status: DocumentStatus | None = None
     file_name: str | None = None
     file_path: str | None = None
     file_size_bytes: int | None = None
@@ -53,6 +54,7 @@ class DocumentRead(BaseModel):
     maintenance_request_id: uuid.UUID | None
     apartment_id: uuid.UUID | None
     document_type: DocumentType
+    status: DocumentStatus | None
     file_name: str
     file_path: str
     file_size_bytes: int | None
