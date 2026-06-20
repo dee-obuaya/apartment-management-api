@@ -44,5 +44,5 @@ class User(Base):
     uploaded_documents = relationship('Document', back_populates='uploaded_by')
     action_logs = relationship('ActionLog', back_populates='user')
     exception_logs = relationship('ExceptionLog', back_populates='user')
-    reviewed_applications = relationship('Application', back_populates='user')
+    reviewed_applications = relationship('Application', back_populates='reviewed_by')
     created_templates = relationship('Template', back_populates='created_by')
