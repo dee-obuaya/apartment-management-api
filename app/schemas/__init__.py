@@ -16,3 +16,4 @@ from app.schemas.application import ApplicationCreate, ApplicationUpdate, Applic
 from app.schemas.template import TemplateCreate, TemplateUpdate, TemplateRead
 from app.schemas.action_log import ActionLogCreate, ActionLogRead
 from app.schemas.exception_log import ExceptionLogCreate, ExceptionLogRead
+from app.schemas.base import APIResponse, UserSummary, TenantSummary, OwnerSummary, ApartmentSummary, MaintenanceRequestStatusSummary
