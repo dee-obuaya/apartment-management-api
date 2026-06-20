@@ -43,7 +43,8 @@ class Apartment(Base):
     amenities = relationship('ApartmentAmenity', back_populates='apartment')
     leases = relationship('Lease', back_populates='apartment')
     maintenance_requests = relationship('MaintenanceRequest', back_populates='apartment')
-
+    documents = relationship('Document', back_populates='apartment')
+    applications = relationship('Application', back_populates='apartment')
 
 class ApartmentAmenity(Base):
     __tablename__ = 'apartment_amenities'
@@ -56,5 +57,3 @@ class ApartmentAmenity(Base):
     amenity_name = Column(String(100), nullable=False)
 
     apartment = relationship('Apartment', back_populates='amenities')
-    documents = relationship('Document', back_populates='apartment')
-    applications = relationship('Application', back_populates='apartment')
