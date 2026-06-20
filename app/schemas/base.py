@@ -53,7 +53,7 @@ class ApartmentSummary(BaseModel):
     status: ApartmentStatus
 
 
-class MaintenanceRequestSummary(BaseModel):
+class MaintenanceRequestStatusSummary(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: uuid.UUID
