@@ -26,6 +26,12 @@ class DocumentType(str, enum.Enum):
     other = "other"
 
 
+class DocumentStatus(str, enum.Enum):
+    sent = 'sent'
+    signed = 'signed'
+    approved = 'approved'
+    rejected = 'rejected'
+
 class Document(Base):
     __tablename__ = "documents"
     __table_args__ = (
@@ -73,6 +79,12 @@ class Document(Base):
         Enum(DocumentType, name="document_type"),
         nullable=False,
     )
+
+    status = Column (
+        Enum(DocumentStatus, name='document_status'),
+        nullable=True
+    )
+
     file_name = Column(String(255), nullable=False)
     file_path = Column(String(1000), nullable=False)
     file_size_bytes = Column(BigInteger, nullable=True)
