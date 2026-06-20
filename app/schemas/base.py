@@ -1,10 +1,19 @@
 import uuid
 
+from typing import Generic, TypeVar
 from pydantic import BaseModel, ConfigDict
 
 from app.models.user import IdType, UserRole
 from app.models.tenant import BackgroundCheckStatus
 from app.models.apartment import ApartmentStatus
+
+T = TypeVar('T')
+
+
+class APIResponse(BaseModel, Generic[T]):
+    success: bool = True
+    message: str
+    data: T | None = None
 
 
 class UserSummary(BaseModel):
