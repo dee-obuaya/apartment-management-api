@@ -12,3 +12,7 @@ from app.schemas.maintenance import (
     MaintenanceRequestCreate, MaintenanceRequestUpdate, MaintenanceRequestRead,
 )
 from app.schemas.document import DocumentCreate, DocumentUpdate, DocumentRead
+from app.schemas.application import ApplicationCreate, ApplicationUpdate, ApplicationRead
+from app.schemas.template import TemplateCreate, TemplateUpdate, TemplateRead
+from app.schemas.action_log import ActionLogCreate, ActionLogRead
+from app.schemas.exception_log import ExceptionLogCreate, ExceptionLogRead
