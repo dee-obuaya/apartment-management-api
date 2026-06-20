@@ -24,5 +24,5 @@ class Owner (Base):
         ),
     )
 
-    user = relationship('User', back_populates='owner_profile')
-    apartments = relationship('Apartment', back_populates='owner')
+    user = relationship('User', back_populates='owner_profile', lazy='joined')
+    apartments = relationship('Apartment', back_populates='owner', lazy='joined')
