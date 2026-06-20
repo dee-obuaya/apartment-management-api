@@ -28,7 +28,6 @@ class UserUpdate(BaseModel):
 
 class UserVerifyId(BaseModel):
     id_verified: bool
-    id_verified_at: datetime | None = None
 
 
 class UserRead(BaseModel):
