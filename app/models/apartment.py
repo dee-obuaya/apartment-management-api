@@ -57,3 +57,4 @@ class ApartmentAmenity(Base):
 
     apartment = relationship('Apartment', back_populates='amenities')
     documents = relationship('Document', back_populates='apartment')
+    applications = relationship('Application', back_populates='apartment')
