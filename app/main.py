@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
-from app.routers import users, owners
+from app.routers import users, owners, apartments
 
 app = FastAPI(
     title='Apartment Management System',
@@ -10,6 +10,7 @@ app = FastAPI(
 
 app.include_router(users.router)
 app.include_router(owners.router)
+app.include_router(apartments.router)
 
 app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
