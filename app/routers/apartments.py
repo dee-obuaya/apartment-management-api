@@ -84,3 +84,32 @@ def get_apartment(apartment_id: uuid.UUID, db: Session = Depends(get_db_session)
         'message': 'Apartment retrieved successfully',
         'data': ApartmentRead.model_validate(apartment)
     }
+
+
+@router.patch('/{apartment_id}', response_model=APIResponse[ApartmentRead])
+def update_apartment(
+    apartment_id: uuid.UUID,
+    payload: ApartmentUpdate,
+    db: Session = Depends(get_db_session)
+):
+    apartment = db.query(Apartment).filter(Apartment.id == apartment_id).first()
+    if not apartment:
+        raise HTTPException(status_code=404, detail='Apartment not found')
+
+    if payload.owner_id:
+        owner = db.query(Owner).filter(Owner.id == payload.owner_id).first()
+        if not owner:
+            raise HTTPException(status_code=404, detail='Owner not found')
+
+    for field, value in payload.model_dump(exclude_unset=True).items():
+        setattr(apartment, field, value)
+
+    db.commit()
+    db.refresh(apartment)
+
+    return {
+        'success': True,
+        'message': 'Apartment updated successfully',
+        'data': ApartmentRead.model_validate(apartment)
+    }
+
