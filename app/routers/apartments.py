@@ -46,6 +46,8 @@ def list_apartments(
         'message': 'Apartments retrieved successfully',
         'data': [ApartmentRead.model_validate(a) for a in apartments]
     }
+
+
 @router.post('/', response_model=APIResponse[ApartmentRead], status_code=201)
 def create_apartment(payload: ApartmentCreate, db: Session = Depends(get_db_session)):
     if payload.owner_id:
@@ -67,5 +69,18 @@ def create_apartment(payload: ApartmentCreate, db: Session = Depends(get_db_sess
     return {
         'success': True,
         'message': 'Apartment created successfully',
+        'data': ApartmentRead.model_validate(apartment)
+    }
+
+
+@router.get('/{apartment_id}', response_model=APIResponse[ApartmentRead])
+def get_apartment(apartment_id: uuid.UUID, db: Session = Depends(get_db_session)):
+    apartment = db.query(Apartment).filter(Apartment.id == apartment_id).first()
+    if not apartment:
+        raise HTTPException(status_code=404, detail='Apartment not found')
+
+    return {
+        'success': True,
+        'message': 'Apartment retrieved successfully',
         'data': ApartmentRead.model_validate(apartment)
     }
