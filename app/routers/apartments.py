@@ -187,3 +187,21 @@ def replace_amenities(
         'message': 'Amenities updated successfully',
         'data': ApartmentRead.model_validate(apartment)
     }
+
+
+@router.delete('/{apartment_id}', status_code=204)
+def delete_apartment(apartment_id: uuid.UUID, db: Session = Depends(get_db_session)):
+    apartment = db.query(Apartment).filter(Apartment.id == apartment_id).first()
+    if not apartment:
+        raise HTTPException(status_code=404, detail='Apartment not found')
+
+    try:
+        db.delete(apartment)
+        db.commit()
+    except IntegrityError as e:
+        db.rollback()
+        # print(f"IntegrityError: {e.orig}")
+        raise HTTPException(
+            status_code=400,
+            detail='Apartment cannot be deleted while it has active leases or other assignments'
+        )
