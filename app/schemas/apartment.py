@@ -8,8 +8,8 @@ from app.models.apartment import ApartmentStatus
 from app.schemas.base import OwnerSummary
 
 
-class ApartmentAmenityCreate(BaseModel):
-    amenity_name: str
+class ApartmentAmenityPayload(BaseModel):
+    amenities: list[str]
 
 
 class ApartmentAmenityRead(BaseModel):
