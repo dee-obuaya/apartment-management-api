@@ -40,7 +40,7 @@ class Apartment(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     owner = relationship('Owner', back_populates='apartments')
-    amenities = relationship('ApartmentAmenity', back_populates='apartment')
+    amenities = relationship('ApartmentAmenity', back_populates='apartment', cascade='all, delete-orphan')
     leases = relationship('Lease', back_populates='apartment')
     maintenance_requests = relationship('MaintenanceRequest', back_populates='apartment')
     documents = relationship('Document', back_populates='apartment')
