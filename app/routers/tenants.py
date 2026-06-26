@@ -69,3 +69,56 @@ def list_tenants(
         'message': 'Tenants retrieved successfully',
         'data': [TenantRead.model_validate(t) for t in tenants]
     }
+
+
+@router.get('/{tenant_id}', response_model=APIResponse[TenantRead])
+def get_tenant(tenant_id: uuid.UUID, db: Session = Depends(get_db_session)):
+    tenant = db.query(Tenant).filter(Tenant.id == tenant_id).first()
+    if not tenant:
+        raise HTTPException(status_code=404, detail='Tenant not found')
+
+    return {
+        'success': True,
+        'message': 'Tenant retrieved successfully',
+        'data': TenantRead.model_validate(tenant)
+    }
+
+
+@router.patch('/{tenant_id}', response_model=APIResponse[TenantRead])
+def update_tenant(
+    tenant_id: uuid.UUID,
+    payload: TenantUpdate,
+    db: Session = Depends(get_db_session)
+):
+    tenant = db.query(Tenant).filter(Tenant.id == tenant_id).first()
+    if not tenant:
+        raise HTTPException(status_code=404, detail='Tenant not found')
+
+    for field, value in payload.model_dump(exclude_unset=True).items():
+        setattr(tenant, field, value)
+
+    db.commit()
+    db.refresh(tenant)
+
+    return {
+        'success': True,
+        'message': 'Tenant updated successfully',
+        'data': TenantRead.model_validate(tenant)
+    }
+
+
+@router.delete('/{tenant_id}', status_code=204)
+def delete_tenant(tenant_id: uuid.UUID, db: Session = Depends(get_db_session)):
+    tenant = db.query(Tenant).filter(Tenant.id == tenant_id).first()
+    if not tenant:
+        raise HTTPException(status_code=404, detail='Tenant not found')
+
+    try:
+        db.delete(tenant)
+        db.commit()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=400,
+            detail='Tenant cannot be deleted while they have active leases or other assignments'
+        )
